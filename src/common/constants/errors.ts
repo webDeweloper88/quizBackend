@@ -10,5 +10,6 @@ export const AppError = {
     EMAIL_NOT_CONFIRMED: 'Email не подтвержден',
     ACCOUNT_INACTIVE: 'Аккаунт неактивен',
     SERVER_ERROR: 'Внутренняя ошибка сервера',
-  };
+    INVALID_REFRESH_TOKEN: 'Неверный refresh token',
+}
   
