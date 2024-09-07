@@ -17,7 +17,9 @@
       "@auth/*": ["src/modules/auth/*"],
       "@user/*": ["src/modules/user/*"],
       "@mail/*": ["src/modules/mail/*"],
-      "@token/*": ["src/modules/token/*"]
+      "@token/*": ["src/modules/token/*"],
+      "@decarators/*": ["src/decorators/*"],
+      "@guards/*": ["src/guards/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

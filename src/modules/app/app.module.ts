@@ -4,6 +4,10 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configurations from '@config/configurations';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { AuthModule } from '@modules/auth/auth.module';
+import { UserModule } from '@modules/user/user.module';
+import { User } from '@modules/user/models/user.model';
+import { Token } from '@modules/token/models/token.model';
 
 @Module({
   imports: [
@@ -23,9 +27,11 @@ import { SequelizeModule } from '@nestjs/sequelize';
         database: configService.get<string>('db.POSTGRES_DB'),
         autoLoadModels: true, // Автоматически загружает модели
         synchronize: true, // Синхронизация моделей с базой (в продакшене лучше false)
-        models: [], // Укажи модели здесь
+        models: [User, Token], // Укажи модели здесь
       }),
     }),
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
