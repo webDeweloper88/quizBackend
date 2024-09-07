@@ -8,6 +8,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
+  // Получение разрешенного источника из переменных окружения
+  const frontendUrl = configService.get<string>('FRONTEND_URL');
+  // Включение CORS с настройками
+  app.enableCors({
+    origin: frontendUrl, // Разрешенные источники (например, фронтенд на Vue или React)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Разрешенные методы
+    credentials: true, // Поддержка передачи cookie и авторизационных заголовков
+    allowedHeaders: 'Content-Type, Accept, Authorization', // Разрешенные заголовки
+    exposedHeaders: 'Authorization', // Заголовки, которые могут быть доступны клиенту
+  });
 
   // Конфигурация Swagger
   const config = new DocumentBuilder()
@@ -18,7 +28,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  const port = configService.get('port');
+  const port = configService.get('app.port');
   await app.listen(port);
 }
 bootstrap();
