@@ -4,8 +4,7 @@ export default () => ({
     FRONTEND_URL: process.env.FRONTEND_URL,
     APP_URL: process.env.APP_URL,
   },
-
-  database: {
+  db: {
     POSTGRES_HOST: process.env.POSTGRES_HOST,
     POSTGRES_PORT: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
     POSTGRES_USER: process.env.POSTGRES_USER,
