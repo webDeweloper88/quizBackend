@@ -6,11 +6,11 @@ export default () => ({
   },
 
   database: {
-    DB_HOST: process.env.DB_HOST,
-    DB_PORT: parseInt(process.env.DB_PORT, 10) || 5432,
-    DB_USER: process.env.DB_USER,
-    DB_PASSWORD: process.env.DB_PASSWORD,
-    DB_NAME: process.env.DB_NAME,
+    POSTGRES_HOST: process.env.POSTGRES_HOST,
+    POSTGRES_PORT: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
+    POSTGRES_DB: process.env.POSTGRES_DB,
   },
   jwt: {
     JWT_SECRET: process.env.JWT_SECRET,

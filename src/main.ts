@@ -7,7 +7,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true, // Преобразование входных данных в соответствующие типы
+      whitelist: true, // Удаление неописанных свойств
+      forbidNonWhitelisted: true, // Генерация ошибок для неописанных свойств
+    }),
+  );
   // Получение разрешенного источника из переменных окружения
   const frontendUrl = configService.get<string>('FRONTEND_URL');
   // Включение CORS с настройками
