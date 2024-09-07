@@ -22,8 +22,4 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty({ example: 'USER', description: 'Роль пользователя (USER или ADMIN)' })
-  @IsString()
-  @IsOptional()
-  role?: Role;
 }
