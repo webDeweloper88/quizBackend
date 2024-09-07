@@ -1,9 +1,11 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Role, User } from './models/user.model';
+import {  User } from './models/user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { AppError } from '@common/constants/errors';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { Role } from './models/role.enum';
 
 
 @Injectable()
@@ -69,6 +71,47 @@ export class UserService {
   
     user.isActive = false;
     await user.save();
+  }
+  
+  async publicUser(id: string): Promise<ResponseUserDto> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(AppError.USER_NOT_EXIST);
+    }
+  
+    // Возвращаем только публичные данные
+    const publicUser: ResponseUserDto = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      isEmailConfirmed: user.isEmailConfirmed,
+      isActive: user.isActive,
+    };
+    
+    return publicUser;
+  }
+  
+  async updateUser(id: string, dto: UpdateUserDto): Promise<ResponseUserDto> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+  
+    user.email = dto.email || user.email;
+    user.username = dto.username || user.username;
+    user.isActive = dto.isActive !== undefined ? dto.isActive : user.isActive;
+    
+    await user.save();
+  
+    return {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      isEmailConfirmed: user.isEmailConfirmed,
+      isActive: user.isActive,
+    };
   }
   
 

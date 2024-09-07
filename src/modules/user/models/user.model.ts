@@ -1,12 +1,9 @@
 import { Token } from '@modules/token/models/token.model';
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { Role } from './role.enum';
 
 
-export enum Role {
-    USER = 'USER',
-    ADMIN = 'ADMIN',
-  }
 @Table({ tableName: 'users' })
 export class User extends Model<User> {
   
